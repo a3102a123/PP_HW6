@@ -26,7 +26,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     ret = clEnqueueWriteBuffer(command_queue, height, CL_TRUE, 0, sizeof(int), &imageHeight, 0, NULL, NULL);
     ret = clEnqueueWriteBuffer(command_queue, halffilterSize, CL_TRUE, 0, sizeof(int), &filterWidth, 0, NULL, NULL);
     // create kernel
-    cl_kernel kernel = clCreateKernel(program, "convolution", &ret);
+    cl_kernel kernel = clCreateKernel(*program, "convolution", &ret);
     // set kernel arg
     ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&input_img_mem);
     ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&filter_mem);
@@ -38,4 +38,6 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     size_t global_item_size = img_size;
     size_t local_item_size = 1;
     ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
+    // copy the result back to host
+    ret = clEnqueueReadBuffer(command_queue, output_img_mem, CL_TRUE, 0, img_size * sizeof(float), outputImage, 0, NULL, NULL);
 }
