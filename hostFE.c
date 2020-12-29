@@ -4,7 +4,7 @@
 #include "helper.h"
 
 void check_err(cl_int ret){
-    if(!ret)
+    if(ret)
         printf("Error code: %d\n",ret);
 }
 
