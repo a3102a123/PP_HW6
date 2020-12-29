@@ -82,19 +82,32 @@ void initCL(cl_device_id *device, cl_context *context, cl_program *program)
     CHECK(status, "clCreateProgramWithSource");
     status = clBuildProgram(*program, 1, device, NULL, NULL, NULL);
     CHECK(status, "clBuildProgram");
-    if (status == CL_BUILD_PROGRAM_FAILURE) {
-        // Determine the size of the log
-        size_t log_size;
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+    if (status != CL_SUCCESS) {
+        char *buff_erro;
+        cl_int errcode;
+        size_t build_log_len;
+        errcode = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &build_log_len);
+        if (errcode) {
+                    printf("clGetProgramBuildInfo failed at line %d\n", __LINE__);
+                    exit(-1);
+                }
 
-        // Allocate memory for the log
-        char *log = (char *) malloc(log_size);
+            buff_erro = malloc(build_log_len);
+            if (!buff_erro) {
+                printf("malloc failed at line %d\n", __LINE__);
+                exit(-2);
+            }
 
-        // Get the log
-        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
+            errcode = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, build_log_len, buff_erro, NULL);
+            if (errcode) {
+                printf("clGetProgramBuildInfo failed at line %d\n", __LINE__);
+                exit(-3);
+            }
 
-        // Print the log
-        printf("%s\n", log);
+            fprintf(stderr,"Build log: \n%s\n", buff_erro); //Be careful with  the fprint
+            free(buff_erro);
+            fprintf(stderr,"clBuildProgram failed\n");
+            exit(EXIT_FAILURE);
     }
 
     return;
