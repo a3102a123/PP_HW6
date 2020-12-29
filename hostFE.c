@@ -21,11 +21,11 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     cl_mem halffilterSize = clCreateBuffer(*context, CL_MEM_READ_ONLY, sizeof(int), NULL, &ret);
     cl_mem output_img_mem = clCreateBuffer(*context, CL_MEM_WRITE_ONLY, img_size * sizeof(float), NULL, &ret);
     // init mem
-    ret = clEnqueueWriteBuffer(command_queue, input_img_mem, CL_TRUE, img_size * sizeof(float), inputImage, 0, NULL, NULL);
-    ret = clEnqueueWriteBuffer(command_queue, filter_mem, CL_TRUE, filterSize * sizeof(float), filter, 0, NULL, NULL);
-    ret = clEnqueueWriteBuffer(command_queue, width, CL_TRUE, sizeof(int), &imageWidth, 0, NULL, NULL);
-    ret = clEnqueueWriteBuffer(command_queue, height, CL_TRUE, sizeof(int), &imageHeight, 0, NULL, NULL);
-    ret = clEnqueueWriteBuffer(command_queue, halffilterSize, CL_TRUE, sizeof(int), &half, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, input_img_mem, CL_TRUE, 0, img_size * sizeof(float), inputImage, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, filter_mem, CL_TRUE, 0, filterSize * sizeof(float), filter, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, width, CL_TRUE, 0, sizeof(int), &imageWidth, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, height, CL_TRUE, 0, sizeof(int), &imageHeight, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, halffilterSize, CL_TRUE, 0, sizeof(int), &half, 0, NULL, NULL);
     // create kernel
     cl_kernel kernel = clCreateKernel(program, "convolution", &ret);
     // set kernel arg
