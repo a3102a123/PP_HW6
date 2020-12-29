@@ -29,7 +29,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     check_err(ret);
     cl_mem height = clCreateBuffer(*context, CL_MEM_READ_WRITE, sizeof(int), NULL, &ret);
     check_err(ret);
-    cl_mem filterSize = clCreateBuffer(*context, CL_MEM_READ_WRITE, sizeof(int), NULL, &ret);
+    cl_mem filterWIdth_mem = clCreateBuffer(*context, CL_MEM_READ_WRITE, sizeof(int), NULL, &ret);
     check_err(ret);
     cl_mem output_img_mem = clCreateBuffer(*context, CL_MEM_READ_WRITE, img_size * sizeof(float), NULL, &ret);
     check_err(ret);
@@ -43,7 +43,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     check_err(ret);
     ret = clEnqueueWriteBuffer(command_queue, height, CL_TRUE, 0, sizeof(int), &imageHeight, 0, NULL, NULL);
     check_err(ret);
-    ret = clEnqueueWriteBuffer(command_queue, filterSize, CL_TRUE, 0, sizeof(int), &filterWidth, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, filterWIdth_mem, CL_TRUE, 0, sizeof(int), &filterWidth, 0, NULL, NULL);
     check_err(ret);
     // create kernel
     printf("check kernel create\n");
@@ -88,7 +88,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     check_err(ret);
     ret = clReleaseMemObject(height);
     check_err(ret);
-    ret = clReleaseMemObject(halffilterSize);
+    ret = clReleaseMemObject(filterWIdth_mem);
     check_err(ret);
     ret = clReleaseMemObject(output_img_mem);
     check_err(ret);
