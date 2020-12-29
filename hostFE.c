@@ -5,7 +5,7 @@
 
 void check_err(cl_int ret){
     if(!ret)
-        print("Error code: %d\n",ret);
+        printf("Error code: %d\n",ret);
 }
 
 void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
