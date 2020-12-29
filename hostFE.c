@@ -72,6 +72,12 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     // copy the result back to host
     printf("check result cpy\n");
     ret = clEnqueueReadBuffer(command_queue, output_img_mem, CL_TRUE, 0, img_size * sizeof(float), outputImage, 0, NULL, NULL);
+    for(int i = 0 ; i < 5 ; i++){
+        for(int j = 0 ; j < 5 ; j++){
+            printf("%f ",outputImage[ i * imageWidth + j]);
+        }
+        printf("\n");
+    }
     check_err(ret);
     printf("check free\n");
     ret = clFlush(command_queue);
