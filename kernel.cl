@@ -2,15 +2,19 @@ __kernel void convolution(__global const float *input_img, __global const float 
 {
     int i = get_global_id(0) % imageWidth;
     int j = get_global_id(0) / imageWidth;
+    int k,l;
     float sum;
-    for (l = -halffilterSize; l <= halffilterSize; l++)
+    for (k = -halffilterSize; k <= halffilterSize; k++)
     {
-        if (i + k >= 0 && i + k < imageHeight &&
-            j + l >= 0 && j + l < imageWidth)
+        for (l = -halffilterSize; l <= halffilterSize; l++)
         {
-            sum += input_img[(i + k) * imageWidth + j + l] *
-                    filter[(k + halffilterSize) * filterWidth +
-                            l + halffilterSize];
+            if (i + k >= 0 && i + k < imageHeight &&
+                j + l >= 0 && j + l < imageWidth)
+            {
+                sum += inputImage[(i + k) * imageWidth + j + l] *
+                        filter[(k + halffilterSize) * filterWidth +
+                                l + halffilterSize];
+            }
         }
     }
     output_img[i * imageWidth + j] = sum;
