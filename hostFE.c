@@ -36,5 +36,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     ret = clSetKernelArg(kernel, 4, sizeof(cl_mem), (void *)&halffilterSize);
     ret = clSetKernelArg(kernel, 5, sizeof(cl_mem), (void *)&output_img_mem);
     // run kernel
+    size_t global_item_size = img_size;
+    size_t local_item_size = 1;
     ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
 }
