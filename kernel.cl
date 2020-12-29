@@ -12,7 +12,7 @@ __kernel void convolution(__global const float *input_img, __global const float 
             if (i + k >= 0 && i + k < imageHeight &&
                 j + l >= 0 && j + l < imageWidth)
             {
-                sum += inputImage[(i + k) * imageWidth + j + l] *
+                sum += input_img[(i + k) * imageWidth + j + l] *
                         filter[(k + halffilterSize) * filterWidth +
                                 l + halffilterSize];
             }
