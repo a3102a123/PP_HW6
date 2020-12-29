@@ -81,12 +81,11 @@ void initCL(cl_device_id *device, cl_context *context, cl_program *program)
     *program = clCreateProgramWithSource(*context, 1, &source, NULL, NULL);
     CHECK(status, "clCreateProgramWithSource");
     status = clBuildProgram(*program, 1, device, NULL, NULL, NULL);
-    CHECK(status, "clBuildProgram");
     if (status != CL_SUCCESS) {
         char *buff_erro;
         cl_int errcode;
         size_t build_log_len;
-        errcode = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &build_log_len);
+        errcode = clGetProgramBuildInfo(*program, *device, CL_PROGRAM_BUILD_LOG, 0, NULL, &build_log_len);
         if (errcode) {
                     printf("clGetProgramBuildInfo failed at line %d\n", __LINE__);
                     exit(-1);
@@ -98,7 +97,7 @@ void initCL(cl_device_id *device, cl_context *context, cl_program *program)
                 exit(-2);
             }
 
-            errcode = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, build_log_len, buff_erro, NULL);
+            errcode = clGetProgramBuildInfo(*program, *device, CL_PROGRAM_BUILD_LOG, build_log_len, buff_erro, NULL);
             if (errcode) {
                 printf("clGetProgramBuildInfo failed at line %d\n", __LINE__);
                 exit(-3);
@@ -109,7 +108,7 @@ void initCL(cl_device_id *device, cl_context *context, cl_program *program)
             fprintf(stderr,"clBuildProgram failed\n");
             exit(EXIT_FAILURE);
     }
-
+    CHECK(status, "clBuildProgram");
     return;
 }
 
