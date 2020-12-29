@@ -59,7 +59,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     check_err(ret);
     ret = clSetKernelArg(kernel, 3, sizeof(cl_mem), (void *)&height);
     check_err(ret);
-    ret = clSetKernelArg(kernel, 4, sizeof(cl_mem), (void *)&filterSize);
+    ret = clSetKernelArg(kernel, 4, sizeof(cl_mem), (void *)&filterWIdth_mem);
     check_err(ret);
     ret = clSetKernelArg(kernel, 5, sizeof(cl_mem), (void *)&output_img_mem);
     check_err(ret);
