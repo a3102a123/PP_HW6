@@ -85,13 +85,13 @@ void initCL(cl_device_id *device, cl_context *context, cl_program *program)
     if (status == CL_BUILD_PROGRAM_FAILURE) {
         // Determine the size of the log
         size_t log_size;
-        clGetProgramBuildInfo(program, devices_id[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
 
         // Allocate memory for the log
         char *log = (char *) malloc(log_size);
 
         // Get the log
-        clGetProgramBuildInfo(program, devices_id[0], CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
+        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
 
         // Print the log
         printf("%s\n", log);
