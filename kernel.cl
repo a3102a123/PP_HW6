@@ -4,7 +4,7 @@ __kernel void convolution(__global const float *input_img, __global const float 
     int i = id / *imageWidth;
     int j = id % *imageWidth;
     int k,l;
-    float sum;
+    float sum = 0;
     int halffilterSize = *filterWidth / 2;
     for (k = -halffilterSize; k <= halffilterSize; k++)
     {
@@ -19,8 +19,8 @@ __kernel void convolution(__global const float *input_img, __global const float 
             }
         }
     }
-    if( id < 5)
-        printf("%f\n",input_img[id]);
+    /*if( id < 5)
+        printf("ID %d : %f\n",sum);*/
     /*if( id == 0){
         printf("%d %d %d\n",*imageWidth,*imageHeight,*filterWidth);
         for (k = -halffilterSize; k <= halffilterSize; k++)
