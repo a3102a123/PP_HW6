@@ -10,7 +10,6 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     cl_int status,ret;
     int img_size = imageWidth * imageHeight;
     int filterSize = filterWidth * filterWidth;
-    int half = filterWidth / 2;
     // create command queue
     cl_command_queue command_queue = clCreateCommandQueue(*context, *device, 0, &ret);
     // create kernel mem
@@ -25,7 +24,7 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     ret = clEnqueueWriteBuffer(command_queue, filter_mem, CL_TRUE, 0, filterSize * sizeof(float), filter, 0, NULL, NULL);
     ret = clEnqueueWriteBuffer(command_queue, width, CL_TRUE, 0, sizeof(int), &imageWidth, 0, NULL, NULL);
     ret = clEnqueueWriteBuffer(command_queue, height, CL_TRUE, 0, sizeof(int), &imageHeight, 0, NULL, NULL);
-    ret = clEnqueueWriteBuffer(command_queue, halffilterSize, CL_TRUE, 0, sizeof(int), &half, 0, NULL, NULL);
+    ret = clEnqueueWriteBuffer(command_queue, halffilterSize, CL_TRUE, 0, sizeof(int), &filterWidth, 0, NULL, NULL);
     // create kernel
     cl_kernel kernel = clCreateKernel(program, "convolution", &ret);
     // set kernel arg
