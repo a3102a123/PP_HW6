@@ -65,9 +65,9 @@ void hostFE(int filterWidth, float *filter, int imageHeight, int imageWidth,
     // check_err(ret);
     // run kernel
     // printf("check kernel runing\n");
-    size_t global_item_size[2] = {imageWidth / 10,imageHeight / 10}};
-    size_t local_item_size[2] = {10,10}};
-    ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
+    size_t global_item_size[2] = {imageWidth,imageHeight};
+    size_t local_item_size[2] = {10,10};
+    ret = clEnqueueNDRangeKernel(command_queue, kernel, 2, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
     // check_err(ret);
     // copy the result back to host
     // printf("check result cpy\n");
