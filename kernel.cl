@@ -19,6 +19,7 @@ __kernel void convolution(__global const float *input_img, __global const float 
             }
         }
     }
+    printf("%d ",id);
     /*if( id < 5)
         printf("ID %d : %f\n",sum);*/
     /*if( id == 0){
